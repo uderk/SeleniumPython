@@ -2,13 +2,17 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import os
+from selenium.webdriver.chrome.options import Options as ChOptions
+from selenium.webdriver.firefox.options import Options as FFOptions
 
 
 @pytest.fixture(scope="class")
 def init_driver(request):
 
-    supported_browsers = ['chrome', 'ch', 'headleschrome', 'firefox', 'edge', 'ff']
-    browser = os.environ.get('BROWSER', 'chrome')
+    #global driver
+    supported_browsers = ['chrome', 'ch', 'headleschrome', 'firefox', 'headlesfirefox', 'edge', 'ff']
+
+    browser = os.environ.get('BROWSER', None)
     if not browser:
         raise Exception("The environment variable browser must be set")
 
@@ -21,6 +25,14 @@ def init_driver(request):
         driver = webdriver.Chrome()
     elif browser in ('firefox', 'ff'):
         driver = webdriver.Firefox()
+    elif browser in "headleschrome":
+        chrome_options = ChOptions()
+        chrome_options.add_argument('--headless')
+        driver = webdriver.Chrome(options=chrome_options)
+    elif browser in "headlesfirefox":
+        chrome_options = FFOptions()
+        chrome_options.add_argument('--headless')
+        driver = webdriver.Firefox(options=chrome_options)
 
     request.cls.driver = driver
     yield
