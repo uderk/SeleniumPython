@@ -1,6 +1,9 @@
+import time
+
 from venitest.src.helpers.config_helpers import get_base_url
 from venitest.src.SeleniumExtended import SeleniumExtended
 from venitest.src.pages.locators.CheckOutPageLocators import CheckOutPageLocators
+from venitest.src.helpers.generic_helpers import generate_random_email
 
 
 class CheckOutPage(CheckOutPageLocators):
@@ -16,7 +19,7 @@ class CheckOutPage(CheckOutPageLocators):
     country = "Bulgaria"
     postcode = "9000"
     phone = "08705858402"
-    email = "test@email.com"
+    email = generate_random_email()
 
     # state = "Sofia"
 
@@ -47,4 +50,9 @@ class CheckOutPage(CheckOutPageLocators):
 
     def click_place_order_and_verify(self):
         self.sl.wait_and_click(self.PLACE_ORDER_BUTTON)
-        #self.sl.wait_until_element_is_visible(self.ORDER_RECEIVED)
+        # place order takes unusual amount of time
+        time.sleep(15)
+        self.sl.wait_until_element_is_visible(self.ORDER_RECEIVED)
+
+    def get_order_number(self):
+        self.sl.wait_and_get_text(self.ORDER_NUMBER)

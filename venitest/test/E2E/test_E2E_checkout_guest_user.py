@@ -4,7 +4,7 @@ import pytest
 from venitest.src.pages.HomePage import HomePage
 from venitest.src.pages.Header import Header
 from venitest.src.pages.CartPage import CartPage
-from  venitest.src.pages.CheckOutPage import CheckOutPage
+from venitest.src.pages.CheckOutPage import CheckOutPage
 
 @pytest.mark.usefixtures('init_driver')
 class TestE2ECheckOutGuestUser:
@@ -15,7 +15,7 @@ class TestE2ECheckOutGuestUser:
         print("**************")
         print("This tests verifies the checkout process for guest user")
         print("**************")
-        #constants
+        # constants
         coupon_code = 100
         # page objects
         home_page = HomePage(self.driver)
@@ -43,14 +43,14 @@ class TestE2ECheckOutGuestUser:
         checkout_page.select_country()
         checkout_page.enter_street()
         checkout_page.enter_town()
-        # time.sleep(2)
-        # checkout_page.enter_state()
-        # time.sleep(2)
         checkout_page.enter_postcode()
         checkout_page.enter_phone()
         checkout_page.enter_email()
-    # click on place order
+    # click on place order and verify
         checkout_page.click_place_order_and_verify()
-    # verify order is received
+        order_number = checkout_page.get_order_number()
+        print("****ORDER NUMBER IS")
+        print(order_number)
+        print("***Order number finish")
 
     # verify order is recorded in DB (via SQL)

@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, StaleElementReferenceException
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
+from selenium.webdriver.common.by import By
 class SeleniumExtended:
     def __init__(self, driver):
         self.driver = driver
@@ -46,8 +46,10 @@ class SeleniumExtended:
 
     def wait_until_element_is_visible(self, locator, timeout=None):
         timeout = timeout if timeout else self.default_timeout
-
-        WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
+        except StaleElementReferenceException:
+            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
 
     def wait_until_elements_are_visible(self, locator, timeout=None, err=None):
         timeout = timeout if timeout else self.default_timeout
@@ -72,3 +74,13 @@ class SeleniumExtended:
             WebDriverWait(self.driver, timeout).until(
                 EC.visibility_of_element_located(locator)
             ).click().send_keys(input_text)
+
+    def wait_and_get_text(self, locator, timeout=None):
+        time.sleep(5)
+        timeout = timeout if timeout else self.default_timeout
+        WebDriverWait(self.driver, timeout).until(
+            EC.presence_of_all_elements_located((By.XPATH, "//*")))
+        element = WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
+
+        return element.text
+

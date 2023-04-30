@@ -14,3 +14,4 @@ class CheckOutPageLocators:
     PLACE_ORDER_BUTTON = (By.ID, "place_order")
     COUNTRY_DROPDOWN_INPUT = (By.XPATH, "//input[@class = 'select2-search__field']")
     ORDER_RECEIVED = (By.XPATH, "//h1[contains(text(),'Order received')]")
+    ORDER_NUMBER = (By.CSS_SELECTOR, "li.order")
