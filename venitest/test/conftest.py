@@ -35,6 +35,7 @@ def init_driver(request):
         driver = webdriver.Firefox(options=chrome_options)
 
     request.cls.driver = driver
-    yield
     driver.maximize_window()
-    driver.quit()
+    yield
+
+    #driver.quit()
