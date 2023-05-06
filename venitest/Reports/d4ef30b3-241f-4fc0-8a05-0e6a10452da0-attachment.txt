@@ -1,0 +1,4 @@
+************
+test ID 12
+This test checks logging with non-existing user
+***************************

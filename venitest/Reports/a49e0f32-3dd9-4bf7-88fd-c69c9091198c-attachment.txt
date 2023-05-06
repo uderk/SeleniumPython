@@ -1,0 +1,6 @@
+**************
+This tests verifies the checkout process for guest user
+**************
+****ORDER NUMBER IS
+None
+***Order number finish
